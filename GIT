@@ -1,0 +1,13 @@
+GIT:
+
+git remote 
+	to create or interact with remote repository. This command will return nothing
+	if you have not configured the remote repository. 
+	local : means your local repository
+	origin: means your remote repository, a path to remote repository
+	
+	git remote -v //gives you full path of remote repository
+	git init //to tur the current directory into a Git repository
+	git commit //committing recent changes to local repository
+	
+	
