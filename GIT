@@ -8,6 +8,146 @@ git remote
 	
 	git remote -v //gives you full path of remote repository
 	git init //to tur the current directory into a Git repository
+	git add //to add the recent changes and files in local repository
 	git commit //committing recent changes to local repository
+	git remote add origin https://url //links your local repository to remote repository. 
+	The word origin in above command is not special in any way, you can change it to whatever 
+	you want. For exp: repo-on-GitHub
+	git remote add repo-on-GitHub https://url
 	
+git push
+	git log --oneline --graph --decorate --all //to display the cmmits. 
+	git push <remote-shortname> <branch>
+	git push origin master
+	$ git log --oneline --graph --decorate --all
+	* a779bb7 (HEAD -> master, origin/master) Initial commit
+	origin/master is called tracking branch.
+
+git pull
+	origin/master branch is not a live mapping of where the remote's master
+	branch is located. If the remote's master moves, the local origin/master 
+	branch statys the same. To update this branch, we need to sync the two 
+	together. 
+	git pull origin master //to sync the local with the remote
+	displays information similar to git log --statys
 	
+git fetch
+	If you don't want to automatically merge the local branch with the tracking branch
+	then you would not use git pull, your would rather use git fetch.
+	You might want to do this if there are commits on the repository that you don't have 
+	but there are also commits on the local repository that the remote one does not have 
+	either.
+	git fetch is used to retrieve commits from a remote repository's branch
+	but it does not automatically merge the local branch with the remote tracking
+	branch after those commits have been received. 
+	git fetch origin master. The following happens when git fetch is ran
+	1)the commit(s) on the remote branch are copied to the local repository
+	2)the local tracking branch (e.g. origin/master) is moved to point to the most recent commit
+	3)the local branch does not change at all. 
+	Once you do fetch, if we want our commits on origin/master to be on our local master branch,
+	we just do merge.
+
+Forking a repository:
+	You can not run git fork on command line. Fork is provided by hosting environment. 
+	In version control, fork repository means you duplicate it. Typically, you fork a 
+	repository belongs to somebodyelse so you can make an identical copy of their repository
+	When you clone a repository, you get an identical copy of the repository on your local machine.
+	
+	git clone url //to clone project to local machine
+	git checkout -b <branch-name> //switch to a new branch so that all the changes will be appear in new branch rahter in master
+	makes changes
+	git diff //to see recent changes before committing them
+	git add .
+	git commit -m "commit message"
+	git log --oneline --graph --decorate --all //to see all the commit log before push
+	git push origin <branch-name> //to push branch in remote repository
+	
+A quick way that we can see how many commits each contributor has added to the repository
+is to use the git shortlog command:
+
+git shortlog
+
+git shortlog -s -n //just to see number of commits in order
+
+Filter By Author:
+	git log --author=Surma //to display all the commits by an author Surma
+	git show 5966b66 //to see specific commit
+	git log --grep="unit tests" //to see all the commits related to unit tests
+
+CONTRIBUTING.md file:
+		As you could probably tell by its name, this file lists out the information you should 
+		follow to contribute to the project. You should look for this file before you start doing 
+		development of any kind. 
+		
+		Ask questions to project maintainers via GitHub Issues environment. 
+		GitHub Issue tracker can have
+			1) a label or multiple labels applied to it
+			2) can be assigned to an individual
+			3) can be assigned a milestone (for exp the issues will be resolved by the next major release)
+
+
+Pull Request:
+	a request to the original or source repository's maintainer to include changes in their project that you 
+	made in your fork of their project. 
+	You can just hit new pull request and choose appropriate branch name. And send the pull request with descriptive
+	titles.
+	
+START AND WATCHING:
+Starring is helpful if you want to keep track of certain repositories. But it's not entirely helpful if you need to 
+actively keep up with a repositories development because you have to manually go to stars page to view the repositories 
+and see if they've changed. 
+If you need to keep up with a project's changes and want to be notified of when things chage, 
+GitHub offers a "watch" feature. 
+
+Including Upstream Changes:
+Upstream means the original remote repository [not the forked one]. When we clone our remote forked repository,
+git creates a connection automatically called origin. In order for us to sync our forked repository with original one
+we have create a new connection to original remote repository manually usually called upstream. 
+
+git remote add upstream https://github.com/udacity/course-collaboration-travel-plans.git
+//Renaming the remote repositories
+$ git remote rename mine origin
+$ git remote rename source-repo upstream
+//to get the change from upstream :
+git fetch upstream master
+//to merge it in master:
+# to make sure I'm on the correct branch for merging
+$ git checkout master
+
+# merge in Lam's changes
+$ git merge upstream/master
+
+# send Lam's changes to *my* remote
+$ git push origin master
+
+Squash:
+	combining the commit together is called squashing. 
+	//squashing last three commit to one.
+	git rebase -i HEAD~3 //HEAD~3 will be base the other commit will be placed on to. 
+	-i is interactive mode
+	
+	HEAD indicates your current location (it could point to several things, but typically it will either point to a branch
+	name or directly to commit's SHA). 
+	git rebase -i HEAD~3 //gives you option for pick or squash. And you can also reword the 
+	commit message that you pick. 
+	
+	git push -f //to force push your changes
+
+git rebase:
+
+use p or pick – to keep the commit as is
+use r or reword – to keep the commit's content but alter the commit message
+use e or edit – to keep the commit's content but stop before committing so that you can:
+add new content or files
+remove content or files
+alter the content that was going to be committed
+use s or squash – to combine this commit's changes into the previous commit (the commit above it in the list)
+use f or fixup – to combine this commit's change into the previous one but drop the commit message
+use x or exec – to run a shell command
+use d or drop – to delete the commit
+
+
+
+
+
+
